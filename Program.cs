@@ -74,11 +74,18 @@ namespace NZZwalks
 
             builder.Services.AddDbContext<AuthDbcontext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("dbcauth")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NzWalks")
+          /*  builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NzWalks")
                 .AddEntityFrameworkStores<AuthDbcontext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders();*/
 
-            builder.Services.Configure<IdentityOptions>(opt =>
+			builder.Services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>().AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NZZwalks")
+				.AddEntityFrameworkStores<AuthDbcontext>()
+				.AddDefaultTokenProviders()
+                .AddSignInManager<SignInManager<IdentityUser>>();
+
+			//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AccountContext>().AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("SoftStacksApi").AddDefaultTokenProviders();
+
+			builder.Services.Configure<IdentityOptions>(opt =>
             {
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
@@ -91,8 +98,8 @@ namespace NZZwalks
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options=>options.TokenValidationParameters=new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
@@ -113,9 +120,9 @@ namespace NZZwalks
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+			app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-
-            app.MapControllers();
+			app.MapControllers();
 
             app.UseStaticFiles(new StaticFileOptions
             {

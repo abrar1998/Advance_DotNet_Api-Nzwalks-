@@ -142,3 +142,4 @@ D:\API PROJECTS\NZZwalks\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFr
 D:\API PROJECTS\NZZwalks\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 D:\API PROJECTS\NZZwalks\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 D:\API PROJECTS\NZZwalks\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\API PROJECTS\NZZwalks\obj\Debug\net8.0\NZZwalks.sourcelink.json

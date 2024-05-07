@@ -25,8 +25,8 @@ namespace NZZwalks.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        [Authorize]
+		[Authorize]
+		[HttpGet]
         public async Task<IActionResult> GetAllRegions()
         {
             var regions = await regionRepo.GetAllRegions();
